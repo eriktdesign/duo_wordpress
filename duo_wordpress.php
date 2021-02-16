@@ -157,6 +157,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             duo_debug_log('Found an XMLRPC request. XMLRPC is allowed for this site. Skipping second factor');
             return false; //allows the XML-RPC protocol for remote publishing
         }
+        
+        if (defined('WP_CLI' ) && WP_CLI) {
+            duo_debug_log('Found a WP CLI request. WP CLI is allowed. Skipping second factor');
+            return false; //allows WP CLI commands to be executed from the shell
+        }
 
         if (duo_get_option('duo_ikey', '') == '' || duo_get_option('duo_skey', '') == '' ||
             duo_get_option('duo_host', '') == '') {
